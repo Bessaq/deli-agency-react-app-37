@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Home, Heart, ShoppingCart, ClipboardList, User, Search, Bell, Plus, Star, Flame } from 'lucide-react';
 import { CategoryTabs } from '../components/CategoryTabs';
+import { Carousel, TestimonialCard } from '../components/TestimonialCarousel';
 
 interface Product {
   id: number;
@@ -59,6 +60,27 @@ const Index = () => {
       calories: 180,
       rating: 4.5,
       category: 'Bebidas'
+    }
+  ];
+
+  const testimonials = [
+    {
+      name: "Maria Silva",
+      designation: "Cliente Frequente",
+      description: "O melhor cappuccino da cidade! Sempre fresco e com aquele sabor especial que me faz voltar todos os dias.",
+      profileImage: "https://images.unsplash.com/photo-1494790108755-2616b612b47c?w=150&h=150&fit=crop&crop=face"
+    },
+    {
+      name: "João Santos",
+      designation: "Amante de Café",
+      description: "Atendimento excepcional e produtos de qualidade. A padaria virou minha segunda casa!",
+      profileImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
+    },
+    {
+      name: "Ana Costa",
+      designation: "Foodie Local",
+      description: "Variedade incrível de produtos frescos. Os bolos são simplesmente divinos!",
+      profileImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face"
     }
   ];
 
@@ -144,33 +166,23 @@ const Index = () => {
         </div>
       </div>
 
-      {/* Especiais da padaria Section */}
+      {/* Avaliações dos Clientes Section */}
       <div className="px-4 py-3">
         <div className="flex justify-between items-center mb-3">
-          <h2 className="text-lg font-bold">Especiais da Padaria</h2>
-          <button className="text-sm text-green-600 hover:text-green-700">Ver Todos</button>
+          <h2 className="text-lg font-bold">Avaliações dos Clientes</h2>
+          <button className="text-sm text-green-600 hover:text-green-700">Ver Todas</button>
         </div>
-        <div className="overflow-x-auto pb-4">
-          <div className="flex gap-4">
-            <div className="relative bg-gradient-to-br from-amber-800 to-amber-900 rounded-2xl shadow-lg overflow-hidden min-w-[280px] h-[180px]">
-              <div className="absolute inset-0 flex flex-col justify-center items-center px-4 text-center">
-                <div className="mb-2">☕</div>
-                <h3 className="font-medium text-white text-base">Cappuccino Especial</h3>
-                <div className="flex items-center mt-1">
-                  <span className="text-white text-sm">4.3</span>
-                  <Star className="text-yellow-400 w-3 h-3 ml-1 fill-current" />
-                  <span className="text-white/60 text-xs ml-2">160ml</span>
-                </div>
-                <div className="flex flex-col items-center mt-2">
-                  <p className="text-white font-bold text-lg mb-2">R$25,40</p>
-                  <button className="bg-white rounded-full w-8 h-8 flex items-center justify-center hover:bg-gray-100 transition-colors">
-                    <Plus className="text-amber-800 w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Carousel
+          items={testimonials.map((testimonial, index) => (
+            <TestimonialCard
+              key={index}
+              testimonial={testimonial}
+              index={index}
+              layout={true}
+              onCardClose={() => {}}
+            />
+          ))}
+        />
       </div>
     </div>
   );
