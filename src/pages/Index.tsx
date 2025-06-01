@@ -1,6 +1,6 @@
-
 import React, { useState } from 'react';
 import { Home, Heart, ShoppingCart, ClipboardList, User, Search, Bell, Plus, Star, Flame } from 'lucide-react';
+import { CategoryTabs } from '../components/CategoryTabs';
 
 interface Product {
   id: number;
@@ -82,19 +82,8 @@ const Index = () => {
   const renderHome = () => (
     <div className="pt-20 pb-20">
       {/* Categories */}
-      <div className="px-4 py-3 grid grid-cols-4 gap-2">
-        {categories.map((category, index) => (
-          <div key={index} className="flex flex-col items-center cursor-pointer hover:scale-105 transition-transform">
-            <div className="w-16 h-16 rounded-full overflow-hidden mb-1 shadow-md">
-              <img
-                src={category.image}
-                alt={category.name}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <span className="text-xs whitespace-nowrap overflow-hidden text-ellipsis">{category.name}</span>
-          </div>
-        ))}
+      <div className="py-3">
+        <CategoryTabs />
       </div>
 
       {/* Promotional Banner */}
