@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Home, Heart, ShoppingCart, ClipboardList, User, Search, Bell, Plus, Star, Flame } from 'lucide-react';
-import { CategoryTabs } from '../components/CategoryTabs';
+import { Component } from '../components/ui/3d-icon-tabs-1';
 import { Carousel, TestimonialCard } from '../components/TestimonialCarousel';
 
 interface Product {
@@ -105,7 +105,7 @@ const Index = () => {
     <div className="pt-20 pb-20">
       {/* Categories */}
       <div className="py-3">
-        <CategoryTabs />
+        <Component />
       </div>
 
       {/* Promotional Banner */}
