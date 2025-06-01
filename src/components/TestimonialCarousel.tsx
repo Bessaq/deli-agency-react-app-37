@@ -49,16 +49,13 @@ const useOutsideClick = (
 
 // ===== Components =====
 const Carousel = ({items, initialScroll = 0}: iCarouselProps) => {
-	const carouselRef = React.useRef<HTMLDivElement>(null);
 	const [currentIndex, setCurrentIndex] = useState(0);
-	const [isDragging, setIsDragging] = useState(false);
 
-	const cardWidth = 400; // Width of each card plus gap
+	const cardWidth = 350; // Width including gap
 	const totalCards = items.length;
 
 	const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-		setIsDragging(false);
-		const threshold = 50; // Minimum drag distance to trigger navigation
+		const threshold = 100; // Minimum drag distance to trigger navigation
 		
 		if (Math.abs(info.offset.x) > threshold) {
 			if (info.offset.x > 0 && currentIndex > 0) {
@@ -75,28 +72,16 @@ const Carousel = ({items, initialScroll = 0}: iCarouselProps) => {
 		setCurrentIndex(index);
 	};
 
-	useEffect(() => {
-		if (carouselRef.current) {
-			const scrollPosition = currentIndex * cardWidth;
-			carouselRef.current.scrollTo({
-				left: scrollPosition,
-				behavior: "smooth",
-			});
-		}
-	}, [currentIndex, cardWidth]);
-
 	return (
 		<div className="relative w-full mt-10">
 			<div className="overflow-hidden">
 				<motion.div
-					ref={carouselRef}
 					className="flex gap-6 px-4"
 					drag="x"
 					dragConstraints={{
 						left: -(totalCards - 1) * cardWidth,
 						right: 0,
 					}}
-					onDragStart={() => setIsDragging(true)}
 					onDragEnd={handleDragEnd}
 					animate={{
 						x: -currentIndex * cardWidth,
@@ -107,7 +92,10 @@ const Carousel = ({items, initialScroll = 0}: iCarouselProps) => {
 						damping: 30,
 					}}
 					style={{
-						cursor: isDragging ? "grabbing" : "grab",
+						cursor: "grab",
+					}}
+					whileDrag={{
+						cursor: "grabbing",
 					}}
 				>
 					{items.map((item, index) => (
@@ -260,12 +248,11 @@ const TestimonialCard = ({
 				className="select-none"
 				whileHover={{
 					scale: 1.02,
-					rotateY: 2,
 					transition: {duration: 0.3, ease: "easeOut"},
 				}}
 				whileTap={{scale: 0.98}}
 			>
-				<div className="rounded-3xl bg-gradient-to-b from-[#f2f0eb] to-[#fff9eb] h-[400px] md:h-[500px] w-[320px] md:w-[380px] overflow-hidden flex flex-col items-center justify-center relative z-10 shadow-xl">
+				<div className="rounded-3xl bg-gradient-to-b from-[#f2f0eb] to-[#fff9eb] h-[350px] w-[320px] overflow-hidden flex flex-col items-center justify-center relative z-10 shadow-xl">
 					<div className="absolute opacity-20 inset-0">
 						<img
 							className="w-full h-full object-cover"
@@ -278,23 +265,23 @@ const TestimonialCard = ({
 					
 					<motion.p
 						layoutId={layout ? `title-${testimonial.name}` : undefined}
-						className="text-[rgba(31, 27, 29, 0.7)] text-lg md:text-xl font-medium text-center px-6 mt-6 leading-relaxed"
+						className="text-[rgba(31, 27, 29, 0.7)] text-lg font-medium text-center px-6 mt-6 leading-relaxed"
 					>
-						{testimonial.description.length > 120
-							? `"${testimonial.description.slice(0, 120)}..."`
+						{testimonial.description.length > 100
+							? `"${testimonial.description.slice(0, 100)}..."`
 							: `"${testimonial.description}"`}
 					</motion.p>
 					
 					<motion.p
 						layoutId={layout ? `category-${testimonial.name}` : undefined}
-						className="text-[rgba(31, 27, 29, 0.7)] text-xl md:text-2xl font-bold text-center mt-6"
+						className="text-[rgba(31, 27, 29, 0.7)] text-xl font-bold text-center mt-4"
 					>
 						{testimonial.name}
 					</motion.p>
 					
 					<motion.p
 						layoutId={layout ? `category-${testimonial.name}` : undefined}
-						className="text-[rgba(31, 27, 29, 0.7)] text-sm md:text-base font-medium text-center mt-2 opacity-70"
+						className="text-[rgba(31, 27, 29, 0.7)] text-sm font-medium text-center mt-2 opacity-70"
 					>
 						{testimonial.designation}
 					</motion.p>
@@ -308,7 +295,7 @@ const ProfileImage = ({src, alt, ...rest}: {src: string; alt: string}) => {
 	const [isLoading, setLoading] = useState(true);
 
 	return (
-		<div className="w-[120px] h-[120px] md:w-[150px] md:h-[150px] overflow-hidden rounded-full border-4 border-[rgba(59,59,59,0.3)] relative">
+		<div className="w-[100px] h-[100px] overflow-hidden rounded-full border-4 border-[rgba(59,59,59,0.3)] relative">
 			<img
 				className={cn(
 					"transition duration-300 w-full h-full object-cover",
