@@ -1,4 +1,3 @@
-
 "use client";
 
 import { motion } from "motion/react";
@@ -9,14 +8,6 @@ import { cn } from "@/lib/utils";
 const tabs = [
   {
     id: 0,
-    label: "Homes",
-    video_url:
-      "https://ik.imagekit.io/htyuwoyvw/ezgif-8ef3c112ce1e7d.webm",
-    initial_render_url:
-      "https://ik.imagekit.io/htyuwoyvw/ezgif-8ef3c112ce1e7d.webm",
-  },
-  {
-    id: 1,
     label: "Experiences",
     video_url:
       "https://ik.imagekit.io/htyuwoyvw/ezgif-68202269f852b7.webm",
@@ -24,7 +15,7 @@ const tabs = [
       "https://ik.imagekit.io/htyuwoyvw/ezgif-68202269f852b7.webm",
   },
   {
-    id: 2,
+    id: 1,
     label: "Services",
     video_url:
       "https://ik.imagekit.io/htyuwoyvw/ezgif-68202269f852b7.webm",
