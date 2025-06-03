@@ -29,12 +29,12 @@ const Index = () => {
   }];
   const bestSellers: Product[] = [{
     id: 1,
-    name: 'Pizza de Queijo Derretido',
+    name: 'Bolo Fofo Formigueiro',
     price: 39.90,
-    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=180&h=120&fit=crop&crop=center',
+    image: '/lovable-uploads/d5f6e42f-f35d-491b-ab12-8e28dd10df34.png',
     calories: 440,
     rating: 4.8,
-    category: 'Fast Food'
+    category: 'Bolos'
   }, {
     id: 2,
     name: 'Hambúrguer Artesanal',
