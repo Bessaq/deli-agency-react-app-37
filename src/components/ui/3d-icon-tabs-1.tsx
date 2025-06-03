@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { motion } from "motion/react";
@@ -136,7 +137,7 @@ function Component({ className }: { className?: string }) {
             >
               <NewBadge className="absolute -top-2 -right-8 z-50" />
 
-              <div className="relative size-28 flex items-center justify-center">
+              <div className="relative size-26 flex items-center justify-center">
                 <video
                   id="banner-video"
                   key={`initial-${tab.id}`}
@@ -180,3 +181,4 @@ function Component({ className }: { className?: string }) {
 }
 
 export { Component };
+
