@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Home, Heart, ShoppingCart, ClipboardList, User, Search, Bell, Plus, Star, Flame } from 'lucide-react';
 import { Component } from '../components/ui/3d-icon-tabs-1';
 import { Carousel, TestimonialCard } from '../components/TestimonialCarousel';
+
 interface Product {
   id: number;
   name: string;
@@ -11,9 +12,11 @@ interface Product {
   rating?: number;
   category: string;
 }
+
 const Index = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [cartItems, setCartItems] = useState<Product[]>([]);
+
   const categories = [{
     name: 'Pão',
     image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=100&h=100&fit=crop&crop=center'
@@ -27,6 +30,7 @@ const Index = () => {
     name: 'Bebidas',
     image: 'https://images.unsplash.com/photo-1613478223719-2ab802602423?w=100&h=100&fit=crop&crop=center'
   }];
+
   const bestSellers: Product[] = [{
     id: 1,
     name: 'Bolo Fofo Formigueiro',
@@ -60,6 +64,7 @@ const Index = () => {
     rating: 4.5,
     category: 'Bebidas'
   }];
+
   const testimonials = [{
     name: "Maria Silva",
     designation: "Cliente Frequente",
@@ -76,19 +81,24 @@ const Index = () => {
     description: "Variedade incrível de produtos frescos. Os bolos são simplesmente divinos!",
     profileImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face"
   }];
+
   const addToCart = (product: Product) => {
     setCartItems([...cartItems, product]);
     console.log('Produto adicionado ao carrinho:', product.name);
   };
+
   const removeFromCart = (productId: number) => {
     setCartItems(cartItems.filter(item => item.id !== productId));
   };
+
   const getCartTotal = () => {
     return cartItems.reduce((total, item) => total + item.price, 0);
   };
+
   const getCartItemCount = () => {
     return cartItems.length;
   };
+
   const renderHome = () => <div className="pt-20 pb-20">
       {/* Categories */}
       <div className="py-3 bg-white">
@@ -156,6 +166,7 @@ const Index = () => {
         <Carousel items={testimonials.map((testimonial, index) => <TestimonialCard key={index} testimonial={testimonial} index={index} layout={true} onCardClose={() => {}} />)} />
       </div>
     </div>;
+
   const renderFavorites = () => <div className="pt-20 pb-20 px-4">
       <h2 className="text-xl font-bold mb-6">Seus Favoritos</h2>
       <div className="grid grid-cols-1 gap-4">
@@ -175,6 +186,7 @@ const Index = () => {
           </div>)}
       </div>
     </div>;
+
   const renderCart = () => <div className="pt-20 pb-20 px-4">
       <h2 className="text-xl font-bold mb-6">Carrinho</h2>
       {cartItems.length === 0 ? <div className="text-center py-12">
@@ -204,6 +216,7 @@ const Index = () => {
           </div>
         </>}
     </div>;
+
   const renderOrders = () => <div className="pt-20 pb-20 px-4">
       <h2 className="text-xl font-bold mb-6">Meus Pedidos</h2>
       <div className="space-y-4">
@@ -233,6 +246,7 @@ const Index = () => {
         </div>
       </div>
     </div>;
+
   const renderProfile = () => <div className="pt-20 pb-20 px-4">
       <div className="text-center mb-8">
         <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -263,6 +277,7 @@ const Index = () => {
         </div>
       </div>
     </div>;
+
   const renderContent = () => {
     switch (activeTab) {
       case 'favorites':
@@ -277,6 +292,15 @@ const Index = () => {
         return renderHome();
     }
   };
+
+  const navItems = [
+    { id: 'home', icon: Home, label: 'Início' },
+    { id: 'favorites', icon: Heart, label: 'Favoritos' },
+    { id: 'cart', icon: ShoppingCart, label: 'Carrinho' },
+    { id: 'orders', icon: ClipboardList, label: 'Pedidos' },
+    { id: 'profile', icon: User, label: 'Perfil' }
+  ];
+
   return <div className="relative w-full max-w-sm mx-auto min-h-screen bg-gray-50 text-gray-800 font-sans overflow-hidden">
       {/* Status Bar */}
       <div className="bg-white px-4 py-2 flex justify-between items-center">
@@ -310,32 +334,54 @@ const Index = () => {
       {/* Main Content */}
       {renderContent()}
 
-      {/* Tab Bar - Fixed at bottom */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg px-2 py-3 grid grid-cols-5 gap-1 border-t border-gray-100 max-w-sm mx-auto">
-        <button onClick={() => setActiveTab('home')} className={`flex flex-col items-center justify-center py-1 transition-colors ${activeTab === 'home' ? 'text-red-700' : 'text-gray-400 hover:text-gray-600'}`}>
-          <Home className="w-5 h-5" />
-          <span className="text-xs mt-1">Início</span>
-        </button>
-        <button onClick={() => setActiveTab('favorites')} className={`flex flex-col items-center justify-center py-1 transition-colors ${activeTab === 'favorites' ? 'text-red-700' : 'text-gray-400 hover:text-gray-600'}`}>
-          <Heart className="w-5 h-5" />
-          <span className="text-xs mt-1">Favoritos</span>
-        </button>
-        <button onClick={() => setActiveTab('cart')} className={`flex flex-col items-center justify-center py-1 transition-colors relative ${activeTab === 'cart' ? 'text-red-700' : 'text-gray-400 hover:text-gray-600'}`}>
-          <ShoppingCart className="w-5 h-5" />
-          <span className="text-xs mt-1">Carrinho</span>
-          {getCartItemCount() > 0 && <span className="absolute -top-1 right-3 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-              {getCartItemCount()}
-            </span>}
-        </button>
-        <button onClick={() => setActiveTab('orders')} className={`flex flex-col items-center justify-center py-1 transition-colors ${activeTab === 'orders' ? 'text-red-700' : 'text-gray-400 hover:text-gray-600'}`}>
-          <ClipboardList className="w-5 h-5" />
-          <span className="text-xs mt-1">Pedidos</span>
-        </button>
-        <button onClick={() => setActiveTab('profile')} className={`flex flex-col items-center justify-center py-1 transition-colors ${activeTab === 'profile' ? 'text-red-700' : 'text-gray-400 hover:text-gray-600'}`}>
-          <User className="w-5 h-5" />
-          <span className="text-xs mt-1">Perfil</span>
-        </button>
+      {/* New Tab Bar - Fixed at bottom with enhanced design */}
+      <div className="fixed bottom-0 left-0 right-0 bg-gray-200 shadow-lg px-4 py-5 flex justify-between items-center border-t border-gray-100 max-w-sm mx-auto rounded-t-3xl">
+        {navItems.map((item) => {
+          const IconComponent = item.icon;
+          const isActive = activeTab === item.id;
+          const cartCount = item.id === 'cart' ? getCartItemCount() : 0;
+          
+          return (
+            <button
+              key={item.id}
+              onClick={() => setActiveTab(item.id)}
+              className={`flex flex-col items-center justify-center gap-1.5 min-w-[70px] transition-all duration-300 ease-out group ${
+                isActive ? 'active' : ''
+              }`}
+            >
+              <div className={`relative w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ease-out ${
+                isActive 
+                  ? 'bg-red-700 scale-110 shadow-lg shadow-red-700/30' 
+                  : 'bg-transparent group-hover:scale-110'
+              }`}>
+                {isActive && (
+                  <div className="absolute inset-0 rounded-full border-2 border-red-700 animate-ping opacity-75"></div>
+                )}
+                <IconComponent 
+                  className={`w-6 h-6 transition-all duration-300 ${
+                    isActive 
+                      ? 'text-white stroke-2' 
+                      : 'text-gray-600 group-hover:text-gray-800 stroke-2'
+                  }`} 
+                />
+                {cartCount > 0 && item.id === 'cart' && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center font-medium">
+                    {cartCount}
+                  </span>
+                )}
+              </div>
+              <span className={`text-xs font-medium transition-all duration-300 ${
+                isActive 
+                  ? 'text-red-700 font-semibold' 
+                  : 'text-gray-600 group-hover:text-gray-800'
+              }`}>
+                {item.label}
+              </span>
+            </button>
+          );
+        })}
       </div>
     </div>;
 };
+
 export default Index;
