@@ -123,7 +123,7 @@ const Index = () => {
       <div className="px-4 py-3">
         <div className="flex justify-between items-center mb-3">
           <h2 className="text-lg font-bold">Mais Vendidos</h2>
-          <button className="text-sm text-green-600 hover:text-green-700">Ver Todos</button>
+          <button className="text-sm text-red-950">Ver Todos</button>
         </div>
         <div className="grid grid-cols-2 gap-4">
           {bestSellers.map(product => <div key={product.id} className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-shadow">
@@ -132,13 +132,13 @@ const Index = () => {
               </div>
               <div className="p-2">
                 <h3 className="font-medium text-sm">{product.name}</h3>
-                <p className="text-green-600 font-bold text-sm">R${product.price.toFixed(2)}</p>
+                <p className="font-bold text-sm text-red-700">R${product.price.toFixed(2)}</p>
                 <div className="flex justify-between items-center mt-1">
                   <div className="flex items-center">
                     <Flame className="text-orange-500 w-3 h-3" />
                     <span className="text-xs text-gray-600 ml-1">{product.calories} Cal</span>
                   </div>
-                  <button onClick={() => addToCart(product)} className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-green-600 transition-colors">
+                  <button onClick={() => addToCart(product)} className="text-white rounded-full w-6 h-6 flex items-center justify-center transition-colors bg-red-950 hover:bg-red-800">
                     <Plus className="w-3 h-3" />
                   </button>
                 </div>
