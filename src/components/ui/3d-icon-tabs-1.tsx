@@ -1,4 +1,3 @@
-
 "use client";
 
 import { motion } from "motion/react";
@@ -9,7 +8,7 @@ import { cn } from "@/lib/utils";
 const tabs = [
   {
     id: 0,
-    label: "Experiences",
+    label: "Café-da-Tarde",
     video_url:
       "https://ik.imagekit.io/htyuwoyvw/ezgif-8ef3c112ce1e7d.webm",
     initial_render_url:
@@ -17,7 +16,7 @@ const tabs = [
   },
   {
     id: 1,
-    label: "Services",
+    label: "Pão Delivery",
     video_url:
       "https://ik.imagekit.io/htyuwoyvw/ezgif-68202269f852b7.webm",
     initial_render_url:
@@ -134,9 +133,7 @@ function Component({ className }: { className?: string }) {
               className="relative"
               transition={{ type: "spring" }}
             >
-              {tab.id !== 0 && (
-                <NewBadge className="absolute -top-2 -right-8 z-50" />
-              )}
+              <NewBadge className="absolute -top-2 -right-8 z-50" />
 
               <div className="relative size-20">
                 <video
