@@ -81,7 +81,7 @@ function Component({ className }: { className?: string }) {
 
   return (
     <div className="flex flex-col items-center w-full">
-      <div className={cn("flex space-x-8 rounded-full", className)}>
+      <div className={cn("flex space-x-6 rounded-full", className)}>
         {tabs.map((tab, index) => (
           <motion.button
             key={tab.id}
@@ -135,7 +135,7 @@ function Component({ className }: { className?: string }) {
             >
               <NewBadge className="absolute -top-2 -right-8 z-50" />
 
-              <div className="relative size-20">
+              <div className="relative size-24">
                 <video
                   id="banner-video"
                   key={`initial-${tab.id}`}
