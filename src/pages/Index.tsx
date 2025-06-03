@@ -312,26 +312,26 @@ const Index = () => {
 
       {/* Tab Bar - Fixed at bottom */}
       <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg px-2 py-3 grid grid-cols-5 gap-1 border-t border-gray-100 max-w-sm mx-auto">
-        <button onClick={() => setActiveTab('home')} className={`flex flex-col items-center justify-center py-1 transition-colors ${activeTab === 'home' ? 'text-green-500' : 'text-gray-400 hover:text-gray-600'}`}>
+        <button onClick={() => setActiveTab('home')} className={`flex flex-col items-center justify-center py-1 transition-colors ${activeTab === 'home' ? 'text-red-700' : 'text-gray-400 hover:text-gray-600'}`}>
           <Home className="w-5 h-5" />
           <span className="text-xs mt-1">Início</span>
         </button>
-        <button onClick={() => setActiveTab('favorites')} className={`flex flex-col items-center justify-center py-1 transition-colors ${activeTab === 'favorites' ? 'text-green-500' : 'text-gray-400 hover:text-gray-600'}`}>
+        <button onClick={() => setActiveTab('favorites')} className={`flex flex-col items-center justify-center py-1 transition-colors ${activeTab === 'favorites' ? 'text-red-700' : 'text-gray-400 hover:text-gray-600'}`}>
           <Heart className="w-5 h-5" />
           <span className="text-xs mt-1">Favoritos</span>
         </button>
-        <button onClick={() => setActiveTab('cart')} className={`flex flex-col items-center justify-center py-1 transition-colors relative ${activeTab === 'cart' ? 'text-green-500' : 'text-gray-400 hover:text-gray-600'}`}>
+        <button onClick={() => setActiveTab('cart')} className={`flex flex-col items-center justify-center py-1 transition-colors relative ${activeTab === 'cart' ? 'text-red-700' : 'text-gray-400 hover:text-gray-600'}`}>
           <ShoppingCart className="w-5 h-5" />
           <span className="text-xs mt-1">Carrinho</span>
           {getCartItemCount() > 0 && <span className="absolute -top-1 right-3 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
               {getCartItemCount()}
             </span>}
         </button>
-        <button onClick={() => setActiveTab('orders')} className={`flex flex-col items-center justify-center py-1 transition-colors ${activeTab === 'orders' ? 'text-green-500' : 'text-gray-400 hover:text-gray-600'}`}>
+        <button onClick={() => setActiveTab('orders')} className={`flex flex-col items-center justify-center py-1 transition-colors ${activeTab === 'orders' ? 'text-red-700' : 'text-gray-400 hover:text-gray-600'}`}>
           <ClipboardList className="w-5 h-5" />
           <span className="text-xs mt-1">Pedidos</span>
         </button>
-        <button onClick={() => setActiveTab('profile')} className={`flex flex-col items-center justify-center py-1 transition-colors ${activeTab === 'profile' ? 'text-green-500' : 'text-gray-400 hover:text-gray-600'}`}>
+        <button onClick={() => setActiveTab('profile')} className={`flex flex-col items-center justify-center py-1 transition-colors ${activeTab === 'profile' ? 'text-red-700' : 'text-gray-400 hover:text-gray-600'}`}>
           <User className="w-5 h-5" />
           <span className="text-xs mt-1">Perfil</span>
         </button>
