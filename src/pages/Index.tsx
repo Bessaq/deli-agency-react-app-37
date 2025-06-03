@@ -291,8 +291,8 @@ const Index = () => {
       {/* Navigation Bar - Fixed at top */}
       <div className="fixed top-8 left-0 right-0 z-10 bg-white px-4 py-3 flex justify-between items-center shadow-sm max-w-sm mx-auto">
         <div className="flex items-center">
-          <span className="text-yellow-500 font-bold">DELI</span>
-          <span className="font-bold">cias Agency</span>
+          <span className="font-bold text-zinc-950">Padaria</span>
+          <span className="font-bold text-red-700">Sobralense</span>
         </div>
         <div className="flex space-x-4">
           <button className="hover:bg-gray-100 p-2 rounded-full transition-colors">
