@@ -9,36 +9,28 @@ import { cn } from "@/lib/utils";
 const tabs = [
   {
     id: 0,
-    label: "Pão",
+    label: "Homes",
     video_url:
-      "https://a0.muscache.com/videos/search-bar-icons/webm/house-selected.webm",
+      "https://ik.imagekit.io/htyuwoyvw/ezgif-68202269f852b7.webm/ik-video.mp4?updatedAt=1748947668468",
     initial_render_url:
-      "https://a0.muscache.com/videos/search-bar-icons/webm/house-twirl-selected.webm",
+      "https://ik.imagekit.io/htyuwoyvw/ezgif-68202269f852b7.webm/ik-video.mp4?updatedAt=1748947668468",
   },
   {
     id: 1,
-    label: "Fast Food",
+    label: "Experiences",
     video_url:
-      "https://a0.muscache.com/videos/search-bar-icons/webm/balloon-selected.webm",
+      "https://ik.imagekit.io/htyuwoyvw/ezgif-68202269f852b7.webm/ik-video.mp4?updatedAt=1748947668468",
     initial_render_url:
-      "https://a0.muscache.com/videos/search-bar-icons/webm/balloon-twirl.webm",
+      "https://ik.imagekit.io/htyuwoyvw/ezgif-68202269f852b7.webm/ik-video.mp4?updatedAt=1748947668468",
   },
   {
     id: 2,
-    label: "Bolos",
+    label: "Services",
     video_url:
       "https://a0.muscache.com/videos/search-bar-icons/webm/consierge-selected.webm",
     initial_render_url:
       "https://a0.muscache.com/videos/search-bar-icons/webm/consierge-twirl.webm",
   },
-  {
-    id: 3,
-    label: "Bebidas",
-    video_url:
-      "https://a0.muscache.com/videos/search-bar-icons/webm/house-selected.webm",
-    initial_render_url:
-      "https://a0.muscache.com/videos/search-bar-icons/webm/house-twirl-selected.webm",
-  }
 ];
 
 function NewBadge({ className }: { className?: string }) {
@@ -116,7 +108,7 @@ function Component({ className }: { className?: string }) {
             {activeTab === tab.id && (
               <motion.span
                 layoutId="bubble"
-                className="absolute bottom-0 w-full left-0 z-10 bg-green-500 rounded-full h-1"
+                className="absolute bottom-0 w-full left-0 z-10 bg-black dark:bg-white rounded-full h-1"
                 transition={{ type: "spring", bounce: 0.19, duration: 0.4 }}
               />
             )}
@@ -150,7 +142,7 @@ function Component({ className }: { className?: string }) {
               className="relative"
               transition={{ type: "spring" }}
             >
-              {tab.id === 1 && (
+              {tab.id !== 0 && (
                 <NewBadge className="absolute -top-2 -right-8 z-50" />
               )}
 
@@ -189,7 +181,7 @@ function Component({ className }: { className?: string }) {
                 </video>
               </div>
             </motion.div>
-            <span className="text-xs whitespace-nowrap overflow-hidden text-ellipsis">{tab.label}</span>
+            <span>{tab.label}</span>
           </motion.button>
         ))}
       </div>
