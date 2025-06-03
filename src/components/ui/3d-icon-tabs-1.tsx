@@ -81,7 +81,7 @@ function Component({ className }: { className?: string }) {
 
   return (
     <div className="flex flex-col items-center w-full">
-      <div className={cn("flex space-x-6 rounded-full", className)}>
+      <div className={cn("flex items-center space-x-6 rounded-full", className)}>
         {tabs.map((tab, index) => (
           <motion.button
             key={tab.id}
@@ -89,7 +89,7 @@ function Component({ className }: { className?: string }) {
             whileHover={"hovered"}
             onClick={() => handleTabClick(tab.id)}
             className={cn(
-              "relative px-2 tracking-[0.01em] cursor-pointer text-neutral-600 dark:text-neutral-300 transition focus-visible:outline-1 focus-visible:ring-1 focus-visible:outline-none flex gap-2 items-center",
+              "relative px-2 tracking-[0.01em] cursor-pointer text-neutral-600 dark:text-neutral-300 transition focus-visible:outline-1 focus-visible:ring-1 focus-visible:outline-none flex gap-2 items-center min-h-[6rem]",
               activeTab === tab.id
                 ? "text-black dark:text-white font-medium tracking-normal"
                 : "hover:text-neutral-800 dark:hover:text-neutral-200 text-neutral-500 dark:text-neutral-400"
@@ -130,12 +130,12 @@ function Component({ className }: { className?: string }) {
                   },
                 }),
               }}
-              className="relative"
+              className="relative flex items-center justify-center"
               transition={{ type: "spring" }}
             >
               <NewBadge className="absolute -top-2 -right-8 z-50" />
 
-              <div className="relative size-24">
+              <div className="relative size-24 flex items-center justify-center">
                 <video
                   id="banner-video"
                   key={`initial-${tab.id}`}
@@ -170,7 +170,7 @@ function Component({ className }: { className?: string }) {
                 </video>
               </div>
             </motion.div>
-            <span>{tab.label}</span>
+            <span className="flex items-center">{tab.label}</span>
           </motion.button>
         ))}
       </div>
