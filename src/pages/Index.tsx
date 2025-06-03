@@ -105,7 +105,7 @@ const Index = () => {
             <div className="w-2/3">
               <p className="text-white text-sm font-medium">Peru assado para o Natal</p>
               <h3 className="text-white text-xl font-bold">30% OFF</h3>
-              <p className="text-white text-xs mb-2">em 30 min</p>
+              <p className="text-white text-xs mb-2">em até 2 horas</p>
               <button className="bg-white text-orange-600 text-xs font-medium px-3 py-1 rounded-full hover:bg-gray-100 transition-colors">
                 Pedir Agora
               </button>
