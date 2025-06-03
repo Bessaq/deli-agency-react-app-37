@@ -1,3 +1,4 @@
+
 "use client";
 
 import { motion } from "motion/react";
@@ -80,7 +81,7 @@ export const CategoryTabs = ({ className }: { className?: string }) => {
             {activeTab === tab.id && (
               <motion.span
                 layoutId="bubble"
-                className="absolute -bottom-2 w-full left-0 z-10 bg-red-700 rounded-full h-1"
+                className="absolute -bottom-2 w-full left-0 z-10 bg-green-500 rounded-full h-1"
                 transition={{ type: "spring", bounce: 0.19, duration: 0.4 }}
               />
             )}
