@@ -11,25 +11,25 @@ const tabs = [
     id: 0,
     label: "Homes",
     video_url:
-      "https://ik.imagekit.io/htyuwoyvw/ezgif-68202269f852b7.webm/ik-video.mp4?updatedAt=1748947668468",
+      "https://ik.imagekit.io/htyuwoyvw/ezgif-68202269f852b7.webm",
     initial_render_url:
-      "https://ik.imagekit.io/htyuwoyvw/ezgif-68202269f852b7.webm/ik-video.mp4?updatedAt=1748947668468",
+      "https://ik.imagekit.io/htyuwoyvw/ezgif-68202269f852b7.webm",
   },
   {
     id: 1,
     label: "Experiences",
     video_url:
-      "https://ik.imagekit.io/htyuwoyvw/ezgif-68202269f852b7.webm/ik-video.mp4?updatedAt=1748947668468",
+      "https://ik.imagekit.io/htyuwoyvw/ezgif-68202269f852b7.webm",
     initial_render_url:
-      "https://ik.imagekit.io/htyuwoyvw/ezgif-68202269f852b7.webm/ik-video.mp4?updatedAt=1748947668468",
+      "https://ik.imagekit.io/htyuwoyvw/ezgif-68202269f852b7.webm",
   },
   {
     id: 2,
     label: "Services",
     video_url:
-      "https://a0.muscache.com/videos/search-bar-icons/webm/consierge-selected.webm",
+      "https://ik.imagekit.io/htyuwoyvw/ezgif-68202269f852b7.webm",
     initial_render_url:
-      "https://a0.muscache.com/videos/search-bar-icons/webm/consierge-twirl.webm",
+      "https://ik.imagekit.io/htyuwoyvw/ezgif-68202269f852b7.webm",
   },
 ];
 
