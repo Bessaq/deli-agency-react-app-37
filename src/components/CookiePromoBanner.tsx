@@ -3,7 +3,7 @@ import React from 'react';
 
 const CookiePromoBanner = () => {
   return (
-    <div className="px-4 py-3">
+    <div className="px-4 py-3 relative z-0">
       <div className="relative bg-gradient-to-r from-slate-800 to-slate-900 rounded-xl overflow-hidden shadow-lg">
         <div className="relative p-4 flex items-center justify-between">
           <div className="flex-1">
