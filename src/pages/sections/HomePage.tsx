@@ -4,8 +4,8 @@ import { Product } from '../../types/Product';
 import { Component } from '../../components/ui/3d-icon-tabs-1';
 import PromotionalBanner from '../../components/PromotionalBanner';
 import BestSellers from '../../components/BestSellers';
-import TestimonialsSection from '../../components/TestimonialsSection';
 import CookiePromoBanner from '../../components/CookiePromoBanner';
+import TestimonialsSection from '../../components/TestimonialsSection';
 
 interface HomePageProps {
   bestSellers: Product[];
