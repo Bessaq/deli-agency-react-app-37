@@ -5,7 +5,6 @@ import { Component } from '../../components/ui/3d-icon-tabs-1';
 import PromotionalBanner from '../../components/PromotionalBanner';
 import BestSellers from '../../components/BestSellers';
 import CookiePromoBanner from '../../components/CookiePromoBanner';
-import TestimonialsSection from '../../components/TestimonialsSection';
 
 interface HomePageProps {
   bestSellers: Product[];
@@ -13,7 +12,7 @@ interface HomePageProps {
   onAddToCart: (product: Product) => void;
 }
 
-const HomePage = ({ bestSellers, testimonials, onAddToCart }: HomePageProps) => {
+const HomePage = ({ bestSellers, onAddToCart }: HomePageProps) => {
   return (
     <div className="pt-20 pb-20">
       {/* Categories */}
@@ -29,9 +28,6 @@ const HomePage = ({ bestSellers, testimonials, onAddToCart }: HomePageProps) => 
 
       {/* Cookie Promo Banner */}
       <CookiePromoBanner />
-
-      {/* Avaliações dos Clientes Section */}
-      <TestimonialsSection testimonials={testimonials} />
     </div>
   );
 };
