@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Home, Heart, ShoppingCart, ClipboardList, User, Search, Bell, Plus, Star, Flame } from 'lucide-react';
-import { Component } from '../components/ui/3d-icon-tabs-1';
-import { Carousel, TestimonialCard } from '../components/TestimonialCarousel';
+import HomePage from './sections/HomePage';
 
 interface Product {
   id: number;
@@ -16,20 +15,6 @@ interface Product {
 const Index = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [cartItems, setCartItems] = useState<Product[]>([]);
-
-  const categories = [{
-    name: 'Pão',
-    image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=100&h=100&fit=crop&crop=center'
-  }, {
-    name: 'Fast Food',
-    image: 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=100&h=100&fit=crop&crop=center'
-  }, {
-    name: 'Bolos',
-    image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=100&h=100&fit=crop&crop=center'
-  }, {
-    name: 'Bebidas',
-    image: 'https://images.unsplash.com/photo-1613478223719-2ab802602423?w=100&h=100&fit=crop&crop=center'
-  }];
 
   const bestSellers: Product[] = [{
     id: 1,
@@ -99,73 +84,7 @@ const Index = () => {
     return cartItems.length;
   };
 
-  const renderHome = () => <div className="pt-20 pb-20">
-      {/* Categories */}
-      <div className="py-3 bg-white">
-        <Component />
-      </div>
-
-      {/* Promotional Banner */}
-      <div className="px-4 py-3">
-        <div className="relative bg-gradient-to-r from-orange-600 to-orange-700 rounded-xl overflow-hidden shadow-lg">
-          <div className="absolute inset-0 opacity-30">
-            <img src="/lovable-uploads/8d627e50-cf95-4e22-94f3-6795c260882b.png" alt="Background" className="w-full h-full object-cover" />
-          </div>
-          <div className="relative p-4 flex items-center">
-            <div className="w-2/3">
-              <p className="text-white text-sm font-medium">Peru assado para o Natal</p>
-              <h3 className="text-white text-xl font-bold">30% OFF</h3>
-              <p className="text-white text-xs mb-2">em até 2 horas</p>
-              <button className="bg-white text-orange-600 text-xs font-medium px-3 py-1 rounded-full hover:bg-gray-100 transition-colors">
-                Pedir Agora
-              </button>
-            </div>
-            <div className="absolute right-4 bottom-0">
-              <div className="w-20 h-20 bg-yellow-400 rounded-full flex items-center justify-center">
-                <span className="text-2xl">🍗</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Best Sellers Section */}
-      <div className="px-4 py-3">
-        <div className="flex justify-between items-center mb-3">
-          <h2 className="text-lg font-bold">Mais Vendidos</h2>
-          <button className="text-sm text-red-950">Ver Todos</button>
-        </div>
-        <div className="grid grid-cols-2 gap-4">
-          {bestSellers.map(product => <div key={product.id} className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-shadow">
-              <div className="h-24 overflow-hidden">
-                <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
-              </div>
-              <div className="p-2">
-                <h3 className="font-medium text-sm">{product.name}</h3>
-                <p className="font-bold text-sm text-red-700">R${product.price.toFixed(2)}</p>
-                <div className="flex justify-between items-center mt-1">
-                  <div className="flex items-center">
-                    <Flame className="text-orange-500 w-3 h-3" />
-                    <span className="text-xs text-gray-600 ml-1">{product.calories} Cal</span>
-                  </div>
-                  <button onClick={() => addToCart(product)} className="text-white rounded-full w-6 h-6 flex items-center justify-center transition-colors bg-red-950 hover:bg-red-800">
-                    <Plus className="w-3 h-3" />
-                  </button>
-                </div>
-              </div>
-            </div>)}
-        </div>
-      </div>
-
-      {/* Avaliações dos Clientes Section */}
-      <div className="px-4 py-3">
-        <div className="flex justify-between items-center mb-3">
-          <h2 className="text-lg font-bold">Avaliações dos Clientes</h2>
-          <button className="text-sm text-green-600 hover:text-green-700">Ver Todas</button>
-        </div>
-        <Carousel items={testimonials.map((testimonial, index) => <TestimonialCard key={index} testimonial={testimonial} index={index} layout={true} onCardClose={() => {}} />)} />
-      </div>
-    </div>;
+  const renderHome = () => <HomePage bestSellers={bestSellers} testimonials={testimonials} onAddToCart={addToCart} />;
 
   const renderFavorites = () => <div className="pt-20 pb-20 px-4">
       <h2 className="text-xl font-bold mb-6">Seus Favoritos</h2>
@@ -334,7 +253,7 @@ const Index = () => {
       {/* Main Content */}
       {renderContent()}
 
-      {/* New Tab Bar - Fixed at bottom with enhanced design */}
+      {/* Navigation Bar - Fixed at bottom */}
       <div className="fixed bottom-0 left-0 right-0 bg-gray-200 shadow-lg px-4 py-5 flex justify-between items-center border-t border-gray-100 max-w-sm mx-auto rounded-t-3xl">
         {navItems.map((item) => {
           const IconComponent = item.icon;
