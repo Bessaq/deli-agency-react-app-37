@@ -1,7 +1,8 @@
 
 import React from 'react';
-import { Plus, Flame } from 'lucide-react';
+import { Flame } from 'lucide-react';
 import { Product } from '../types/Product';
+import { BentoGrid, BentoCard } from './ui/bento-grid';
 
 interface BestSellersProps {
   products: Product[];
@@ -15,31 +16,24 @@ const BestSellers = ({ products, onAddToCart }: BestSellersProps) => {
         <h2 className="text-lg font-bold">Mais Vendidos</h2>
         <button className="text-sm text-red-950">Ver Todos</button>
       </div>
-      <div className="grid grid-cols-2 gap-4">
+      <BentoGrid className="grid-cols-2 auto-rows-[12rem]">
         {products.map(product => (
-          <div key={product.id} className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-shadow">
-            <div className="h-24 overflow-hidden">
-              <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
-            </div>
-            <div className="p-2">
-              <h3 className="font-medium text-sm">{product.name}</h3>
-              <p className="font-bold text-sm text-red-700">R${product.price.toFixed(2)}</p>
-              <div className="flex justify-between items-center mt-1">
-                <div className="flex items-center">
-                  <Flame className="text-orange-500 w-3 h-3" />
-                  <span className="text-xs text-gray-600 ml-1">{product.calories} Cal</span>
-                </div>
-                <button 
-                  onClick={() => onAddToCart(product)} 
-                  className="text-white rounded-full w-6 h-6 flex items-center justify-center transition-colors bg-red-950 hover:bg-red-800"
-                >
-                  <Plus className="w-3 h-3" />
-                </button>
+          <BentoCard
+            key={product.id}
+            name={product.name}
+            className="col-span-1"
+            background={
+              <div className="h-full overflow-hidden">
+                <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
               </div>
-            </div>
-          </div>
+            }
+            Icon={Flame}
+            description={`R$${product.price.toFixed(2)} • ${product.calories} Cal`}
+            href="#"
+            cta="Adicionar"
+          />
         ))}
-      </div>
+      </BentoGrid>
     </div>
   );
 };
