@@ -18,8 +18,8 @@ const CookiePromoBanner = () => {
           </div>
           <div className="flex-shrink-0 ml-4">
             <img 
-              src="/lovable-uploads/fa92059a-aba1-4fb8-8bcf-abd2eb15b916.png" 
-              alt="Cookies Piraquê" 
+              src="/lovable-uploads/ed824dd1-b411-4ea9-b132-25dd83ec539b.png" 
+              alt="Cookies Piraquê Goiabinha" 
               className="w-32 h-20 object-contain"
             />
           </div>
