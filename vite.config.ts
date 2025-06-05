@@ -4,6 +4,7 @@ import * as path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: "./", // Adiciona base relativa para recursos
   server: {
     host: "::",
     port: 8080,
