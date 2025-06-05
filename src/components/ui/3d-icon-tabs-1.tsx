@@ -111,15 +111,17 @@ function Component({
               <NewBadge className="absolute -top-2 -right-8 z-50" />
 
               <div className="relative size-28 flex items-center justify-center">
-                <video id="banner-video" key={`initial-${tab.id}`} ref={el => {
+                <video key={`initial-${tab.id}`} ref={el => {
               if (el) videoRefs.current[tab.id] = el;
             }} muted playsInline autoPlay className={cn("absolute", tabClicked ? "opacity-0" : "opacity-100")}>
                   <source src={tab.initial_render_url} type="video/webm" />
+                  <source src={tab.initial_render_url.replace('.webm', '.mp4')} type="video/mp4" />
                 </video>
-                <video id="banner-video" key={`clicked-${tab.id}`} ref={el => {
+                <video key={`clicked-${tab.id}`} ref={el => {
               if (el) videoRefs.current[tab.id] = el;
             }} muted playsInline autoPlay className={cn("absolute", tabClicked ? "opacity-100" : "opacity-0")}>
                   <source src={tab.video_url} type="video/webm" />
+                  <source src={tab.video_url.replace('.webm', '.mp4')} type="video/mp4" />
                 </video>
               </div>
             </motion.div>
