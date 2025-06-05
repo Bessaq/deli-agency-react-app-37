@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import logo from '../assets/logo.png';
 import { Home, Heart, ShoppingCart, ClipboardList, User, Search, Bell, Plus, Star, Flame } from 'lucide-react';
 import HomePage from './sections/HomePage';
 
@@ -234,8 +235,7 @@ const Index = () => {
       {/* Navigation Bar - Fixed at top */}
       <div className="fixed top-8 left-0 right-0 z-10 bg-white px-4 py-3 flex justify-between items-center shadow-sm max-w-sm mx-auto">
         <div className="flex items-center">
-          <span className="font-bold text-zinc-950">Padaria</span>
-          <span className="font-bold text-red-700">Sobralense</span>
+          <img src={logo} alt="Padaria Sobralense Logo" className="h-10" /> {/* Ajuste a altura (h-10) conforme necessário */}
         </div>
         <div className="flex space-x-4">
           <button className="hover:bg-gray-100 p-2 rounded-full transition-colors">
