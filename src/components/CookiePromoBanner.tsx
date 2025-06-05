@@ -7,7 +7,7 @@ const CookiePromoBanner = () => {
       <div className="relative bg-gradient-to-r from-slate-800 to-slate-900 rounded-xl overflow-hidden shadow-lg h-40">
         {/* Imagem de fundo cobrindo todo o container */}
         <img 
-          src="/lovable-uploads/6ab83ab3-1a48-436d-826a-628334698b9d.png" 
+          src="/images/6ab83ab3-1a48-436d-826a-628334698b9d.png" 
           alt="Cookies Piraquê Goiabinha" 
           className="absolute inset-0 w-full h-full object-cover"
         />

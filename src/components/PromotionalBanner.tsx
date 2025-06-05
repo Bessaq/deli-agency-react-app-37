@@ -6,7 +6,7 @@ const PromotionalBanner = () => {
     <div className="px-4 py-3">
       <div className="relative bg-gradient-to-r from-orange-600 to-orange-700 rounded-xl overflow-hidden shadow-lg">
         <div className="absolute inset-0 opacity-30">
-          <img src="/lovable-uploads/8d627e50-cf95-4e22-94f3-6795c260882b.png" alt="Background" className="w-full h-full object-cover" />
+          <img src="/images/8d627e50-cf95-4e22-94f3-6795c260882b.png" alt="Background" className="w-full h-full object-cover" />
         </div>
         <div className="relative p-4 flex items-center">
           <div className="w-2/3">
