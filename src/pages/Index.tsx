@@ -21,7 +21,7 @@ const Index = () => {
     id: 1,
     name: 'Bolo Fofo Formigueiro',
     price: 39.90,
-    image: '/lovable-uploads/d5f6e42f-f35d-491b-ab12-8e28dd10df34.png',
+    image: '/images/d5f6e42f-f35d-491b-ab12-8e28dd10df34.png',
     calories: 440,
     rating: 4.8,
     category: 'Bolos'
