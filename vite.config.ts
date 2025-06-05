@@ -4,7 +4,7 @@ import * as path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "./", // Adiciona base relativa para recursos
+  base: "/", // Usa base absoluta para recursos no Vercel
   server: {
     host: "::",
     port: 8080,
