@@ -18,12 +18,12 @@ const CookiePromoBanner = () => {
         {/* Conteúdo do banner */}
         <div className="relative p-6 flex items-center justify-between h-full z-10">
           <div className="flex-1">
-            <h3 className="text-white text-xl sm:text-2xl font-bold leading-tight mb-4">
+            <h3 className="text-white text-lg sm:text-xl font-bold leading-tight mb-3">
               50% de desconto<br />
               na sua primeira<br />
               compra
             </h3>
-            <button className="bg-orange-500 text-white text-sm font-semibold px-4 py-2 sm:px-6 sm:py-3 rounded-full hover:bg-orange-600 transition-colors">
+            <button className="bg-orange-500 text-white text-xs font-semibold px-3 py-2 sm:px-4 sm:py-2 rounded-full hover:bg-orange-600 transition-colors">
               Compre agora
             </button>
           </div>
