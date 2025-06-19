@@ -18,6 +18,7 @@ const Index = () => {
   const [cartItems, setCartItems] = useState<Product[]>([]);
   const navRef = useRef<HTMLDivElement>(null);
   const blobRef = useRef<HTMLDivElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
 
   // Define navItems array
   const navItems = [
@@ -98,11 +99,11 @@ const Index = () => {
   const handleTabClick = (tabId: string, event: React.MouseEvent<HTMLButtonElement>) => {
     setActiveTab(tabId);
     
-    if (navRef.current && blobRef.current) {
+    if (navRef.current && blobRef.current && ctaRef.current) {
       const button = event.currentTarget;
-      const navRect = navRef.current.getBoundingClientRect();
+      const wrapperRect = navRef.current.getBoundingClientRect();
       const buttonRect = button.getBoundingClientRect();
-      const centerX = buttonRect.left - navRect.left + buttonRect.width / 2;
+      const centerX = buttonRect.left - wrapperRect.left + buttonRect.width / 2;
       
       // Update CSS variable for blob and CTA position
       navRef.current.style.setProperty('--pos', `${centerX}px`);
@@ -252,7 +253,8 @@ const Index = () => {
     return activeItem ? activeItem.emoji : '⟳';
   };
 
-  return <div className="relative w-full max-w-sm mx-auto min-h-screen bg-gray-50 text-gray-800 font-sans overflow-hidden">
+  return (
+    <div className="relative w-full max-w-sm mx-auto min-h-screen bg-gray-50 text-gray-800 font-sans overflow-hidden">
       {/* SVG filter gooey */}
       <svg xmlns="http://www.w3.org/2000/svg" className="absolute w-0 h-0">
         <defs>
@@ -289,9 +291,11 @@ const Index = () => {
           </button>
           <button className="hover:bg-gray-100 p-2 rounded-full transition-colors relative">
             <Bell className="w-5 h-5 text-gray-600" />
-            {getCartItemCount() > 0 && <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+            {getCartItemCount() > 0 && (
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                 {getCartItemCount()}
-              </span>}
+              </span>
+            )}
           </button>
         </div>
       </div>
@@ -305,40 +309,43 @@ const Index = () => {
         className="fixed bottom-0 left-0 right-0 w-full max-w-sm mx-auto h-20"
         style={{ '--pos': '50%' } as React.CSSProperties}
       >
-        <div className="bg-white rounded-t-3xl h-full relative" style={{ filter: 'url(#goo)' }}>
-          <nav className="relative z-10 h-full flex items-center justify-around">
-            {navItems.map((item) => (
-              <button 
-                key={item.id}
-                onClick={(e) => handleTabClick(item.id, e)}
-                className={`w-14 h-14 flex items-center justify-center text-2xl transition-colors ${
-                  activeTab === item.id ? 'text-transparent' : 'text-gray-400'
-                }`}
-              >
-                <item.icon className="w-6 h-6" />
-                {item.id === 'cart' && getCartItemCount() > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center font-medium">
-                    {getCartItemCount()}
-                  </span>
-                )}
-              </button>
-            ))}
-          </nav>
-          
-          {/* Blob inside goo for the effect */}
-          <div 
-            ref={blobRef}
-            className="absolute w-14 h-14 bg-white rounded-full z-0 transition-all duration-300 ease-out"
-            style={{
-              top: '-28px',
-              left: 'var(--pos)',
-              transform: 'translateX(-50%)'
-            }}
-          />
+        <div className="relative w-full h-full" style={{ filter: 'url(#goo)' }}>
+          <div className="bg-white rounded-t-3xl h-full relative">
+            <nav className="relative z-10 h-full flex items-center justify-around">
+              {navItems.map((item) => (
+                <button 
+                  key={item.id}
+                  onClick={(e) => handleTabClick(item.id, e)}
+                  className={`w-14 h-14 flex items-center justify-center text-2xl transition-colors ${
+                    activeTab === item.id ? 'text-transparent' : 'text-gray-400'
+                  }`}
+                >
+                  <item.icon className="w-6 h-6" />
+                  {item.id === 'cart' && getCartItemCount() > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center font-medium">
+                      {getCartItemCount()}
+                    </span>
+                  )}
+                </button>
+              ))}
+            </nav>
+            
+            {/* Blob inside goo for the effect */}
+            <div 
+              ref={blobRef}
+              className="absolute w-14 h-14 bg-white rounded-full z-0 transition-all duration-300 ease-out"
+              style={{
+                top: '-28px',
+                left: 'var(--pos)',
+                transform: 'translateX(-50%)'
+              }}
+            />
+          </div>
         </div>
         
         {/* CTA outside goo for clean appearance */}
         <div 
+          ref={ctaRef}
           className="absolute w-14 h-14 bg-white rounded-full flex items-center justify-center z-20 transition-all duration-300 ease-out pointer-events-none"
           style={{
             top: '52px',
@@ -350,7 +357,8 @@ const Index = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>
+        {`
         .blob.active {
           animation: gooey-pop 0.6s forwards;
         }
@@ -360,8 +368,10 @@ const Index = () => {
           60%  { transform: translateX(-50%) scale(0.9); }
           100% { transform: translateX(-50%) scale(1); }
         }
-      `}</style>
-    </div>;
+        `}
+      </style>
+    </div>
+  );
 };
 
 export default Index;
