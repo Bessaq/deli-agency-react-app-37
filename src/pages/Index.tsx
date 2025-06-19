@@ -89,7 +89,6 @@ const Index = () => {
   const handleCtaClick = () => {
     setCtaActive(true);
     setTimeout(() => setCtaActive(false), 600);
-    // Ação do CTA - pode ser abrir menu especial, etc.
     console.log('CTA clicked!');
   };
 
@@ -221,6 +220,17 @@ const Index = () => {
     }
   };
 
+  // Função para obter a posição do blob baseado na aba ativa
+  const getBlobPosition = () => {
+    const positions = {
+      'home': '12.5%', // posição do primeiro botão
+      'favorites': '37.5%', // posição do segundo botão
+      'cart': '62.5%', // posição do quarto botão
+      'profile': '87.5%' // posição do quinto botão
+    };
+    return positions[activeTab as keyof typeof positions] || '12.5%';
+  };
+
   const navItems = [
     { id: 'home', icon: Home, label: 'Início' },
     { id: 'favorites', icon: Heart, label: 'Favoritos' },
@@ -281,11 +291,20 @@ const Index = () => {
         className="fixed bottom-0 left-0 right-0 w-full max-w-sm mx-auto h-20 bg-white rounded-t-3xl flex items-center justify-around px-5 shadow-lg"
         style={{ filter: 'url(#goo)' }}
       >
+        {/* Blob dinâmico que se move */}
+        <div 
+          className="absolute w-14 h-14 bg-red-600 rounded-full bottom-4 z-10 transition-all duration-500 ease-out"
+          style={{ 
+            left: getBlobPosition(),
+            transform: 'translateX(-50%)'
+          }}
+        />
+
         {/* Item 1 - Home */}
         <button 
           onClick={() => setActiveTab('home')}
-          className={`relative z-10 p-2 text-2xl transition-colors ${
-            activeTab === 'home' ? 'text-red-600' : 'text-gray-400'
+          className={`relative z-20 p-2 text-2xl transition-colors ${
+            activeTab === 'home' ? 'text-white' : 'text-gray-400'
           }`}
         >
           <Home className="w-6 h-6" />
@@ -294,8 +313,8 @@ const Index = () => {
         {/* Item 2 - Favorites */}
         <button 
           onClick={() => setActiveTab('favorites')}
-          className={`relative z-10 p-2 text-2xl transition-colors ${
-            activeTab === 'favorites' ? 'text-red-600' : 'text-gray-400'
+          className={`relative z-20 p-2 text-2xl transition-colors ${
+            activeTab === 'favorites' ? 'text-white' : 'text-gray-400'
           }`}
         >
           <Heart className="w-6 h-6" />
@@ -311,7 +330,7 @@ const Index = () => {
           <RotateCcw className="w-7 h-7 text-red-600" />
         </div>
 
-        {/* Blob for gooey effect */}
+        {/* Blob estático do CTA para gooey effect */}
         <div 
           className={`absolute w-14 h-14 bg-white rounded-full top-[-28px] left-[calc(50%-28px)] z-10 transition-transform duration-300 ${
             ctaActive ? 'animate-pulse scale-110' : ''
@@ -321,8 +340,8 @@ const Index = () => {
         {/* Item 4 - Cart */}
         <button 
           onClick={() => setActiveTab('cart')}
-          className={`relative z-10 p-2 text-2xl transition-colors ${
-            activeTab === 'cart' ? 'text-red-600' : 'text-gray-400'
+          className={`relative z-20 p-2 text-2xl transition-colors ${
+            activeTab === 'cart' ? 'text-white' : 'text-gray-400'
           }`}
         >
           <ShoppingCart className="w-6 h-6" />
@@ -336,8 +355,8 @@ const Index = () => {
         {/* Item 5 - Profile */}
         <button 
           onClick={() => setActiveTab('profile')}
-          className={`relative z-10 p-2 text-2xl transition-colors ${
-            activeTab === 'profile' ? 'text-red-600' : 'text-gray-400'
+          className={`relative z-20 p-2 text-2xl transition-colors ${
+            activeTab === 'profile' ? 'text-white' : 'text-gray-400'
           }`}
         >
           <User className="w-6 h-6" />
