@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import logo from '../assets/logo.png';
-import { Home, Heart, ShoppingCart, ClipboardList, User, Search, Bell, Plus, Star, Flame } from 'lucide-react';
+import { Home, Heart, ShoppingCart, ClipboardList, User, Search, Bell, Plus, Star, Flame, RotateCcw } from 'lucide-react';
 import HomePage from './sections/HomePage';
 
 interface Product {
@@ -16,6 +16,7 @@ interface Product {
 const Index = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [cartItems, setCartItems] = useState<Product[]>([]);
+  const [ctaActive, setCtaActive] = useState(false);
 
   const bestSellers: Product[] = [{
     id: 1,
@@ -83,6 +84,13 @@ const Index = () => {
 
   const getCartItemCount = () => {
     return cartItems.length;
+  };
+
+  const handleCtaClick = () => {
+    setCtaActive(true);
+    setTimeout(() => setCtaActive(false), 600);
+    // Ação do CTA - pode ser abrir menu especial, etc.
+    console.log('CTA clicked!');
   };
 
   const renderHome = () => <HomePage bestSellers={bestSellers} testimonials={testimonials} onAddToCart={addToCart} />;
@@ -222,6 +230,21 @@ const Index = () => {
   ];
 
   return <div className="relative w-full max-w-sm mx-auto min-h-screen bg-gray-50 text-gray-800 font-sans overflow-hidden">
+      {/* SVG filter gooey */}
+      <svg xmlns="http://www.w3.org/2000/svg" version="1.1" className="absolute w-0 h-0">
+        <defs>
+          <filter id="goo">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"/>
+            <feColorMatrix in="blur" mode="matrix"
+              values="1 0 0 0 0
+                      0 1 0 0 0
+                      0 0 1 0 0
+                      0 0 0 20 -10" result="goo"/>
+            <feBlend in="SourceGraphic" in2="goo"/>
+          </filter>
+        </defs>
+      </svg>
+
       {/* Status Bar */}
       <div className="bg-white px-4 py-2 flex justify-between items-center">
         <div className="text-xs font-medium">8:41</div>
@@ -235,7 +258,7 @@ const Index = () => {
       {/* Navigation Bar - Fixed at top */}
       <div className="fixed top-8 left-0 right-0 z-10 bg-white px-4 py-3 flex justify-between items-center shadow-sm max-w-sm mx-auto">
         <div className="flex items-center">
-          <img src={logo} alt="Padaria Sobralense Logo" className="h-10" /> {/* Ajuste a altura (h-10) conforme necessário */}
+          <img src={logo} alt="Padaria Sobralense Logo" className="h-10" />
         </div>
         <div className="flex space-x-4">
           <button className="hover:bg-gray-100 p-2 rounded-full transition-colors">
@@ -253,53 +276,73 @@ const Index = () => {
       {/* Main Content */}
       {renderContent()}
 
-      {/* Navigation Bar - Fixed at bottom */}
-      <div className="fixed bottom-0 left-0 right-0 bg-gray-200 shadow-lg px-4 py-5 flex justify-between items-center border-t border-gray-100 max-w-sm mx-auto rounded-t-3xl">
-        {navItems.map((item) => {
-          const IconComponent = item.icon;
-          const isActive = activeTab === item.id;
-          const cartCount = item.id === 'cart' ? getCartItemCount() : 0;
-          
-          return (
-            <button
-              key={item.id}
-              onClick={() => setActiveTab(item.id)}
-              className={`flex flex-col items-center justify-center gap-1.5 min-w-[70px] transition-all duration-300 ease-out group ${
-                isActive ? 'active' : ''
-              }`}
-            >
-              <div className={`relative w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ease-out ${
-                isActive 
-                  ? 'bg-red-700 scale-110 shadow-lg shadow-red-700/30' 
-                  : 'bg-transparent group-hover:scale-110'
-              }`}>
-                {isActive && (
-                  <div className="absolute inset-0 rounded-full border-2 border-red-700 animate-ping opacity-75"></div>
-                )}
-                <IconComponent 
-                  className={`w-6 h-6 transition-all duration-300 ${
-                    isActive 
-                      ? 'text-white stroke-2' 
-                      : 'text-gray-600 group-hover:text-gray-800 stroke-2'
-                  }`} 
-                />
-                {cartCount > 0 && item.id === 'cart' && (
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center font-medium">
-                    {cartCount}
-                  </span>
-                )}
-              </div>
-              <span className={`text-xs font-medium transition-all duration-300 ${
-                isActive 
-                  ? 'text-red-700 font-semibold' 
-                  : 'text-gray-600 group-hover:text-gray-800'
-              }`}>
-                {item.label}
-              </span>
-            </button>
-          );
-        })}
-      </div>
+      {/* Gooey Bottom Navigation */}
+      <nav 
+        className="fixed bottom-0 left-0 right-0 w-full max-w-sm mx-auto h-20 bg-white rounded-t-3xl flex items-center justify-around px-5 shadow-lg"
+        style={{ filter: 'url(#goo)' }}
+      >
+        {/* Item 1 - Home */}
+        <button 
+          onClick={() => setActiveTab('home')}
+          className={`relative z-10 p-2 text-2xl transition-colors ${
+            activeTab === 'home' ? 'text-red-600' : 'text-gray-400'
+          }`}
+        >
+          <Home className="w-6 h-6" />
+        </button>
+
+        {/* Item 2 - Favorites */}
+        <button 
+          onClick={() => setActiveTab('favorites')}
+          className={`relative z-10 p-2 text-2xl transition-colors ${
+            activeTab === 'favorites' ? 'text-red-600' : 'text-gray-400'
+          }`}
+        >
+          <Heart className="w-6 h-6" />
+        </button>
+
+        {/* CTA Button */}
+        <div 
+          className={`absolute top-[-28px] left-1/2 transform -translate-x-1/2 w-14 h-14 rounded-full bg-white flex items-center justify-center z-30 cursor-pointer transition-transform ${
+            ctaActive ? 'scale-110' : 'scale-100'
+          }`}
+          onClick={handleCtaClick}
+        >
+          <RotateCcw className="w-7 h-7 text-red-600" />
+        </div>
+
+        {/* Blob for gooey effect */}
+        <div 
+          className={`absolute w-14 h-14 bg-white rounded-full top-[-28px] left-[calc(50%-28px)] z-10 transition-transform duration-300 ${
+            ctaActive ? 'animate-pulse scale-110' : ''
+          }`}
+        />
+
+        {/* Item 4 - Cart */}
+        <button 
+          onClick={() => setActiveTab('cart')}
+          className={`relative z-10 p-2 text-2xl transition-colors ${
+            activeTab === 'cart' ? 'text-red-600' : 'text-gray-400'
+          }`}
+        >
+          <ShoppingCart className="w-6 h-6" />
+          {getCartItemCount() > 0 && (
+            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center font-medium">
+              {getCartItemCount()}
+            </span>
+          )}
+        </button>
+
+        {/* Item 5 - Profile */}
+        <button 
+          onClick={() => setActiveTab('profile')}
+          className={`relative z-10 p-2 text-2xl transition-colors ${
+            activeTab === 'profile' ? 'text-red-600' : 'text-gray-400'
+          }`}
+        >
+          <User className="w-6 h-6" />
+        </button>
+      </nav>
     </div>;
 };
 
