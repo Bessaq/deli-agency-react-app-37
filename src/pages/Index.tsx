@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import logo from '../assets/logo.png';
 import { Home, Heart, ShoppingCart, ClipboardList, User, Search, Bell, Plus, Star, Flame, RotateCcw } from 'lucide-react';
 import HomePage from './sections/HomePage';
@@ -17,6 +17,8 @@ const Index = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [cartItems, setCartItems] = useState<Product[]>([]);
   const [ctaActive, setCtaActive] = useState(false);
+  const [ctaPosition, setCtaPosition] = useState('50%');
+  const navRef = useRef<HTMLElement>(null);
 
   const bestSellers: Product[] = [{
     id: 1,
@@ -90,6 +92,23 @@ const Index = () => {
     setCtaActive(true);
     setTimeout(() => setCtaActive(false), 600);
     console.log('CTA clicked!');
+  };
+
+  const handleTabClick = (tabId: string, event: React.MouseEvent<HTMLButtonElement>) => {
+    setActiveTab(tabId);
+    
+    if (navRef.current) {
+      const button = event.currentTarget;
+      const { left, width } = button.getBoundingClientRect();
+      const { left: navLeft } = navRef.current.getBoundingClientRect();
+      const centerX = left - navLeft + width / 2;
+      
+      setCtaPosition(`${centerX}px`);
+      
+      // Trigger gooey animation
+      setCtaActive(true);
+      setTimeout(() => setCtaActive(false), 600);
+    }
   };
 
   const renderHome = () => <HomePage bestSellers={bestSellers} testimonials={testimonials} onAddToCart={addToCart} />;
@@ -220,24 +239,22 @@ const Index = () => {
     }
   };
 
-  // Função para obter a posição do blob baseado na aba ativa
-  const getBlobPosition = () => {
-    const positions = {
-      'home': '12.5%', // posição do primeiro botão
-      'favorites': '37.5%', // posição do segundo botão
-      'cart': '62.5%', // posição do quarto botão
-      'profile': '87.5%' // posição do quinto botão
-    };
-    return positions[activeTab as keyof typeof positions] || '12.5%';
+  const getActiveIcon = () => {
+    switch (activeTab) {
+      case 'home':
+        return <Home className="w-7 h-7" />;
+      case 'favorites':
+        return <Heart className="w-7 h-7" />;
+      case 'cart':
+        return <ShoppingCart className="w-7 h-7" />;
+      case 'orders':
+        return <ClipboardList className="w-7 h-7" />;
+      case 'profile':
+        return <User className="w-7 h-7" />;
+      default:
+        return <RotateCcw className="w-7 h-7" />;
+    }
   };
-
-  const navItems = [
-    { id: 'home', icon: Home, label: 'Início' },
-    { id: 'favorites', icon: Heart, label: 'Favoritos' },
-    { id: 'cart', icon: ShoppingCart, label: 'Carrinho' },
-    { id: 'orders', icon: ClipboardList, label: 'Pedidos' },
-    { id: 'profile', icon: User, label: 'Perfil' }
-  ];
 
   return <div className="relative w-full max-w-sm mx-auto min-h-screen bg-gray-50 text-gray-800 font-sans overflow-hidden">
       {/* SVG filter gooey */}
@@ -288,79 +305,45 @@ const Index = () => {
 
       {/* Gooey Bottom Navigation */}
       <nav 
+        ref={navRef}
         className="fixed bottom-0 left-0 right-0 w-full max-w-sm mx-auto h-20 bg-white rounded-t-3xl flex items-center justify-around px-5 shadow-lg"
         style={{ filter: 'url(#goo)' }}
       >
-        {/* Blob dinâmico que se move */}
+        {/* CTA + blob dinâmico */}
         <div 
-          className="absolute w-14 h-14 bg-red-600 rounded-full bottom-4 z-10 transition-all duration-500 ease-out"
+          className="absolute top-[-28px] w-14 h-14 z-30 pointer-events-none transition-all duration-500 ease-out"
           style={{ 
-            left: getBlobPosition(),
+            left: ctaPosition,
             transform: 'translateX(-50%)'
           }}
-        />
-
-        {/* Item 1 - Home */}
-        <button 
-          onClick={() => setActiveTab('home')}
-          className={`relative z-20 p-2 text-2xl transition-colors ${
-            activeTab === 'home' ? 'text-white' : 'text-gray-400'
-          }`}
         >
-          <Home className="w-6 h-6" />
-        </button>
-
-        {/* Item 2 - Favorites */}
-        <button 
-          onClick={() => setActiveTab('favorites')}
-          className={`relative z-20 p-2 text-2xl transition-colors ${
-            activeTab === 'favorites' ? 'text-white' : 'text-gray-400'
-          }`}
-        >
-          <Heart className="w-6 h-6" />
-        </button>
-
-        {/* CTA Button */}
-        <div 
-          className={`absolute top-[-28px] left-1/2 transform -translate-x-1/2 w-14 h-14 rounded-full bg-white flex items-center justify-center z-30 cursor-pointer transition-transform ${
-            ctaActive ? 'scale-110' : 'scale-100'
-          }`}
-          onClick={handleCtaClick}
-        >
-          <RotateCcw className="w-7 h-7 text-red-600" />
+          <div 
+            className={`absolute inset-0 bg-white rounded-full z-10 transition-transform duration-300 ${
+              ctaActive ? 'animate-pulse scale-110' : ''
+            }`}
+          />
+          <div className="relative z-20 w-14 h-14 flex items-center justify-center text-red-600">
+            {getActiveIcon()}
+          </div>
         </div>
 
-        {/* Blob estático do CTA para gooey effect */}
-        <div 
-          className={`absolute w-14 h-14 bg-white rounded-full top-[-28px] left-[calc(50%-28px)] z-10 transition-transform duration-300 ${
-            ctaActive ? 'animate-pulse scale-110' : ''
-          }`}
-        />
-
-        {/* Item 4 - Cart */}
-        <button 
-          onClick={() => setActiveTab('cart')}
-          className={`relative z-20 p-2 text-2xl transition-colors ${
-            activeTab === 'cart' ? 'text-white' : 'text-gray-400'
-          }`}
-        >
-          <ShoppingCart className="w-6 h-6" />
-          {getCartItemCount() > 0 && (
-            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center font-medium">
-              {getCartItemCount()}
-            </span>
-          )}
-        </button>
-
-        {/* Item 5 - Profile */}
-        <button 
-          onClick={() => setActiveTab('profile')}
-          className={`relative z-20 p-2 text-2xl transition-colors ${
-            activeTab === 'profile' ? 'text-white' : 'text-gray-400'
-          }`}
-        >
-          <User className="w-6 h-6" />
-        </button>
+        {/* Navigation Items */}
+        {navItems.map((item) => (
+          <button 
+            key={item.id}
+            onClick={(e) => handleTabClick(item.id, e)}
+            className={`relative z-20 p-2 text-2xl transition-colors ${
+              activeTab === item.id ? 'text-transparent' : 'text-gray-400'
+            }`}
+          >
+            <item.icon className="w-6 h-6" />
+            {item.id === 'cart' && getCartItemCount() > 0 && (
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center font-medium">
+                {getCartItemCount()}
+              </span>
+            )}
+          </button>
+        ))}
       </nav>
     </div>;
 };
