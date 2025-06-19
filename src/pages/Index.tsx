@@ -16,16 +16,15 @@ interface Product {
 const Index = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [cartItems, setCartItems] = useState<Product[]>([]);
-  const [ctaActive, setCtaActive] = useState(false);
-  const [ctaPosition, setCtaPosition] = useState('50%');
-  const navRef = useRef<HTMLElement>(null);
+  const navRef = useRef<HTMLDivElement>(null);
+  const blobRef = useRef<HTMLDivElement>(null);
 
   // Define navItems array
   const navItems = [
-    { id: 'home', icon: Home },
-    { id: 'favorites', icon: Heart },
-    { id: 'cart', icon: ShoppingCart },
-    { id: 'profile', icon: User }
+    { id: 'home', icon: Home, emoji: '🏠' },
+    { id: 'favorites', icon: Heart, emoji: '♡' },
+    { id: 'cart', icon: ShoppingCart, emoji: '🛒' },
+    { id: 'profile', icon: User, emoji: '☺' }
   ];
 
   const bestSellers: Product[] = [{
@@ -96,26 +95,27 @@ const Index = () => {
     return cartItems.length;
   };
 
-  const handleCtaClick = () => {
-    setCtaActive(true);
-    setTimeout(() => setCtaActive(false), 600);
-    console.log('CTA clicked!');
-  };
-
   const handleTabClick = (tabId: string, event: React.MouseEvent<HTMLButtonElement>) => {
     setActiveTab(tabId);
     
-    if (navRef.current) {
+    if (navRef.current && blobRef.current) {
       const button = event.currentTarget;
-      const { left, width } = button.getBoundingClientRect();
-      const { left: navLeft } = navRef.current.getBoundingClientRect();
-      const centerX = left - navLeft + width / 2;
+      const navRect = navRef.current.getBoundingClientRect();
+      const buttonRect = button.getBoundingClientRect();
+      const centerX = buttonRect.left - navRect.left + buttonRect.width / 2;
       
-      setCtaPosition(`${centerX}px`);
+      // Update CSS variable for blob and CTA position
+      navRef.current.style.setProperty('--pos', `${centerX}px`);
       
       // Trigger gooey animation
-      setCtaActive(true);
-      setTimeout(() => setCtaActive(false), 600);
+      if (blobRef.current) {
+        blobRef.current.classList.add('active');
+        setTimeout(() => {
+          if (blobRef.current) {
+            blobRef.current.classList.remove('active');
+          }
+        }, 600);
+      }
     }
   };
 
@@ -248,25 +248,13 @@ const Index = () => {
   };
 
   const getActiveIcon = () => {
-    switch (activeTab) {
-      case 'home':
-        return <Home className="w-7 h-7" />;
-      case 'favorites':
-        return <Heart className="w-7 h-7" />;
-      case 'cart':
-        return <ShoppingCart className="w-7 h-7" />;
-      case 'orders':
-        return <ClipboardList className="w-7 h-7" />;
-      case 'profile':
-        return <User className="w-7 h-7" />;
-      default:
-        return <RotateCcw className="w-7 h-7" />;
-    }
+    const activeItem = navItems.find(item => item.id === activeTab);
+    return activeItem ? activeItem.emoji : '⟳';
   };
 
   return <div className="relative w-full max-w-sm mx-auto min-h-screen bg-gray-50 text-gray-800 font-sans overflow-hidden">
       {/* SVG filter gooey */}
-      <svg xmlns="http://www.w3.org/2000/svg" version="1.1" className="absolute w-0 h-0">
+      <svg xmlns="http://www.w3.org/2000/svg" className="absolute w-0 h-0">
         <defs>
           <filter id="goo">
             <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"/>
@@ -311,48 +299,68 @@ const Index = () => {
       {/* Main Content */}
       {renderContent()}
 
-      {/* Gooey Bottom Navigation */}
-      <nav 
+      {/* New Gooey Bottom Navigation */}
+      <div 
         ref={navRef}
-        className="fixed bottom-0 left-0 right-0 w-full max-w-sm mx-auto h-20 bg-white rounded-t-3xl flex items-center justify-around px-5 shadow-lg"
-        style={{ filter: 'url(#goo)' }}
+        className="fixed bottom-0 left-0 right-0 w-full max-w-sm mx-auto h-20"
+        style={{ '--pos': '50%' } as React.CSSProperties}
       >
-        {/* CTA + blob dinâmico */}
+        <div className="bg-white rounded-t-3xl h-full relative" style={{ filter: 'url(#goo)' }}>
+          <nav className="relative z-10 h-full flex items-center justify-around">
+            {navItems.map((item) => (
+              <button 
+                key={item.id}
+                onClick={(e) => handleTabClick(item.id, e)}
+                className={`w-14 h-14 flex items-center justify-center text-2xl transition-colors ${
+                  activeTab === item.id ? 'text-transparent' : 'text-gray-400'
+                }`}
+              >
+                <item.icon className="w-6 h-6" />
+                {item.id === 'cart' && getCartItemCount() > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center font-medium">
+                    {getCartItemCount()}
+                  </span>
+                )}
+              </button>
+            ))}
+          </nav>
+          
+          {/* Blob inside goo for the effect */}
+          <div 
+            ref={blobRef}
+            className="absolute w-14 h-14 bg-white rounded-full z-0 transition-all duration-300 ease-out"
+            style={{
+              top: '-28px',
+              left: 'var(--pos)',
+              transform: 'translateX(-50%)'
+            }}
+          />
+        </div>
+        
+        {/* CTA outside goo for clean appearance */}
         <div 
-          className="absolute top-[-28px] w-14 h-14 z-30 pointer-events-none transition-all duration-500 ease-out"
-          style={{ 
-            left: ctaPosition,
+          className="absolute w-14 h-14 bg-white rounded-full flex items-center justify-center z-20 transition-all duration-300 ease-out pointer-events-none"
+          style={{
+            top: '52px',
+            left: 'var(--pos)',
             transform: 'translateX(-50%)'
           }}
         >
-          <div 
-            className={`absolute inset-0 bg-white rounded-full z-10 transition-transform duration-300 ${
-              ctaActive ? 'animate-pulse scale-110' : ''
-            }`}
-          />
-          <div className="relative z-20 w-14 h-14 flex items-center justify-center text-red-600">
-            {getActiveIcon()}
-          </div>
+          <span className="text-2xl text-red-600">{getActiveIcon()}</span>
         </div>
+      </div>
 
-        {/* Navigation Items */}
-        {navItems.map((item) => (
-          <button 
-            key={item.id}
-            onClick={(e) => handleTabClick(item.id, e)}
-            className={`relative z-20 p-2 text-2xl transition-colors ${
-              activeTab === item.id ? 'text-transparent' : 'text-gray-400'
-            }`}
-          >
-            <item.icon className="w-6 h-6" />
-            {item.id === 'cart' && getCartItemCount() > 0 && (
-              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center font-medium">
-                {getCartItemCount()}
-              </span>
-            )}
-          </button>
-        ))}
-      </nav>
+      <style jsx>{`
+        .blob.active {
+          animation: gooey-pop 0.6s forwards;
+        }
+        @keyframes gooey-pop {
+          0%   { transform: translateX(-50%) scale(1); }
+          30%  { transform: translateX(-50%) scale(1.2); }
+          60%  { transform: translateX(-50%) scale(0.9); }
+          100% { transform: translateX(-50%) scale(1); }
+        }
+      `}</style>
     </div>;
 };
 
