@@ -20,6 +20,14 @@ const Index = () => {
   const [ctaPosition, setCtaPosition] = useState('50%');
   const navRef = useRef<HTMLElement>(null);
 
+  // Define navItems array
+  const navItems = [
+    { id: 'home', icon: Home },
+    { id: 'favorites', icon: Heart },
+    { id: 'cart', icon: ShoppingCart },
+    { id: 'profile', icon: User }
+  ];
+
   const bestSellers: Product[] = [{
     id: 1,
     name: 'Bolo Fofo Formigueiro',
